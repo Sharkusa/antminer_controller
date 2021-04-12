@@ -9,7 +9,7 @@ import urllib2
 api_url = "http://149.248.38.51/cgi-bin/getLastVolts.py"
 
 MIN_VOLTS = 12.000000
-AVG_VOLTS = 12.200000
+AVG_VOLTS = 12.400000
 MAX_VOLTS = 13.000000
 
 
