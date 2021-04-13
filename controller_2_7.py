@@ -3,7 +3,11 @@
 import json
 import os
 import time
+import requests
 import urllib2
+import parse
+import requests
+
 
 
 api_url = "http://149.248.38.51/cgi-bin/getLastVolts.py"
@@ -20,6 +24,9 @@ c = 0
 config = 0
 maxVolts = False
 avgVolts = False
+username = "root"
+password = "root"
+# api_url = "http://192.168.1.107/cgi-bin/minerAdvanced.cgi"
 
 while True:
     jsonobj = json.load(urllib2.urlopen(api_url))
@@ -56,7 +63,53 @@ while True:
                 maxVolts = True
                 print "Voltage above MAX setpoint, loading fast config"
 
-# Restart miner and load slow config if battery volts go below AVG_VOLTS
+
+
+    # get speed
+
+
+
+    # import requests module
+
+    from requests.auth import HTTPDigestAuth
+
+    # Making a get request
+    url = 'http://192.168.1.107/cgi-bin/minerAdvanced.cgi/'
+
+    response = requests.get(url, auth=HTTPDigestAuth('root', 'root'))
+
+    page_info = response.content
+    # print page_info
+
+    # print(page_info[1689 : 1692])
+    txt = page_info
+    speed = txt.find("bitmain-freq")
+    print speed
+
+    # save to file
+    f = open('miner_speed.html', 'wb')
+    f.write(page_info[1689: 1692])  # position of bitmain-speed
+    f.close
+
+    # Save speed to file
+
+    f = open('miner_speed.html', 'r')
+    message = f.read()
+    print(message)
+    # f.close()
+
+    content_list = f.readlines()
+    print(content_list)
+    f.close()
+    print(message)
+
+    if (message) > '201':
+        print 'running fast config'
+    else:
+        print 'running slow config'
+
+
+    # Restart miner and load slow config if battery volts go below AVG_VOLTS
 #       if avgVolts: False
 #       print "already running slow config nothing to do"
     pass
