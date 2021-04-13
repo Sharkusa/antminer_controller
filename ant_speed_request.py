@@ -12,5 +12,3 @@ print(message)
 if(message) > '201' :print 'running fast config'
 else: print 'running slow config'
 
-#while message > 300:
-#    print ("yes")
